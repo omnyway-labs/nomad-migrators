@@ -1,4 +1,4 @@
-(defproject net.omnypay/nomad-migrator-h2 "0.0.1"
+(defproject net.omnypay/nomad-migrators "0.0.1"
   :encoding "utf-8"
   :description "OmnyPay Nomad migrators for H2 and PostgreSQL"
   :dependencies [[org.clojure/clojure "1.8.0"]
