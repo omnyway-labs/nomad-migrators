@@ -23,7 +23,6 @@ dependencies:
 
 test:
   pre:
-    - docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD="postgres" -d postgres
     - createdb -h localhost -p 5432 -U postgres nomad-test
   override:
     - lein test
