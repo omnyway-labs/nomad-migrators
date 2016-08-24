@@ -22,9 +22,10 @@ dependencies:
     - mkdir -p ~/.lein; cp ~/omnypay-ci/lein/profiles.clj ~/.lein
 
 test:
-  override:
+  pre:
     - docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD="postgres" -d postgres
-    - make setup-postgres-docker
+    - createdb -h localhost -p 5432 -U postgres nomad-test
+  override:
     - lein test
 
 deployment:
