@@ -28,6 +28,28 @@
              ",applied TIMESTAMP"
              ",CONSTRAINT uq_tag UNIQUE (tag))"))))))
 
+;; FIXME: add IMigrator protocol fn for list-all-tables
+(defn list-all-tables [{:keys [db-spec]}]
+  (jdbc/with-connection db-spec
+    (jdbc/with-query-results rset
+      [(str "SELECT * FROM information_schema.tables "
+            "WHERE table_schema = 'PUBLIC'")]
+      (->> rset doall))))
+
+;; FIXME: add IMigrator protocol fn for drop-all-tables
+(defn drop-all-tables [{:keys [db-spec]}]
+  (jdbc/with-connection db-spec
+    (jdbc/with-query-results rset
+      [(str "SELECT * FROM information_schema.tables "
+            "WHERE table_schema = 'PUBLIC'")]
+      (->> rset
+           (map
+            (fn [{:keys [table_name]}]
+              (println "DROP TABLE" table_name)
+              (jdbc/do-commands
+               (str "DROP TABLE IF EXISTS " table_name " CASCADE"))))
+           doall))))
+
 (extend H2Store
   nomad/IMigrator
   {:-init init
