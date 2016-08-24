@@ -5,7 +5,11 @@
    [nomad.core :as nomad]
    [nomad.migrator.postgres :as postgres]))
 
-(def db (postgres/connect {:db "nomad-test"}))
+(def db (postgres/connect {:db "nomad-test"
+                           :user "postgres"
+                           :password "postgres"
+                           :host "localhost"
+                           :post 5432}))
 
 (deftest migrations
   (is (= {:index #{}, :clauses []} (nomad/clear-migrations!)))

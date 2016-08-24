@@ -12,6 +12,8 @@
                   ":" (or port 5432)
                   "/" db)
     :subprotocol "postgresql"
+    :user user
+    :password password
     :classname "org.postgresql.Driver"}))
 
 (defn init [{:keys [db-spec]}]
