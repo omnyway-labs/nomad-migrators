@@ -15,14 +15,14 @@
   (is (= {:index #{}, :clauses []} (nomad/clear-migrations!)))
   (is (= :ok
          (nomad/register-migration! "init-schema"
-                                    (fn []
-                                      (jdbc/do-commands
-                                       "CREATE TABLE test1(name VARCHAR(32))")))))
+                                    {:up (fn []
+                                           (jdbc/do-commands
+                                            "CREATE TABLE test1(name VARCHAR(32))"))})))
   (is (= :ok 
          (nomad/register-migration! "add-test1-age"
-                                    (fn []
-                                      (jdbc/do-commands
-                                       "ALTER TABLE test1 ADD COLUMN age INTEGER")))))
+                                    {:up (fn []
+                                           (jdbc/do-commands
+                                            "ALTER TABLE test1 ADD COLUMN age INTEGER"))})))
   (is (= :ok (nomad/migrate! db)))
 
   (is (= :ok
