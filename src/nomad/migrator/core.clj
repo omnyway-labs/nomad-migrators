@@ -24,13 +24,13 @@
     (jdbc/with-query-results rset
       ["SELECT * FROM nomad_schema_migrations"]
       (->> rset
-           (map :tag)
+           (map #(keyword (:tag %)))
            doall))))
 
 (defn applied? [{:keys [db-spec]} tag]
   (jdbc/with-connection db-spec
     (jdbc/with-query-results rset
-      ["SELECT * FROM nomad_schema_migrations WHERE tag=?" tag]
+      ["SELECT * FROM nomad_schema_migrations WHERE tag=?" (name tag)]
       (-> (doall rset) count pos?))))
 
 (defn apply! [{:keys [db-spec]} tag migration-fn]
@@ -38,7 +38,7 @@
     (jdbc/transaction
      (migration-fn)
      (jdbc/insert-record :nomad_schema_migrations
-                         {:tag tag
+                         {:tag (name tag)
                           :applied (date->timestamp
                                     (java.util.Date.))}))))
 
