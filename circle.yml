@@ -5,6 +5,7 @@ machine:
     - git config --global user.name "CircleCI"
     - git config --global user.email "circleci@omnypay.net"
     - git config --global push.default simple
+    - sudo apt-get update; sudo apt-get install python-dev
   post:
     - go get github.com/omnypay/github-release
 
