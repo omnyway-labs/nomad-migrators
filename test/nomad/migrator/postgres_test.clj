@@ -29,24 +29,28 @@
   (is (= :ok
          (nomad/register-migration! "init-schema"
                                     {:up (fn []
-                                           (jdbc/do-commands
-                                            "CREATE TABLE test1(name VARCHAR(32))"))})))
-  (is (= :ok 
+                                           (jdbc/with-db-connection [conn (:db-spec @db)]
+                                             (jdbc/db-do-commands
+                                              conn
+                                              "CREATE TABLE test1(name VARCHAR(32))")))})))
+  (is (= :ok
          (nomad/register-migration! "add-test1-age"
                                     {:up (fn []
-                                           (jdbc/do-commands
-                                            "ALTER TABLE test1 ADD COLUMN age INTEGER"))})))
+                                           (jdbc/with-db-connection [conn (:db-spec @db)]
+                                             (jdbc/db-do-commands
+                                              conn
+                                              "ALTER TABLE test1 ADD COLUMN age INTEGER")))})))
   (is (= :ok (nomad/migrate! @db)))
 
   (is (= :ok
          (do
-           (jdbc/with-connection (:db-spec @db)
-             (jdbc/insert-record :test1 {:name "foo" :age 42}))
+           (jdbc/with-db-connection [conn (:db-spec @db)]
+             (jdbc/insert! conn :test1 {:name "foo" :age 42}))
            :ok)))
 
   (is (< 0
-         (jdbc/with-connection (:db-spec @db)
-           (jdbc/with-query-results rset
-             ["SELECT COUNT(1) AS COUNT FROM test1"]
-             (-> rset doall first :count)))))
-  )
+         (jdbc/with-db-connection [conn (:db-spec @db)]
+           (-> (jdbc/query conn
+                       ["SELECT COUNT(1) AS COUNT FROM test1"])
+               first
+               :count)))))

@@ -17,20 +17,18 @@
     :classname "org.postgresql.Driver"}))
 
 (defn init [{:keys [db-spec]}]
-  (jdbc/with-connection db-spec
-    (jdbc/transaction
-     (when (-> (jdbc/with-connection db-spec
-                 (jdbc/with-query-results rset
+  (jdbc/with-db-transaction [db db-spec]
+    (when (empty? (jdbc/query
+                   db
                    [(str "SELECT * FROM information_schema.tables "
                          "WHERE table_schema = 'public' "
-                         " AND table_name = 'nomad_schema_migrations'")]
-                   (doall rset)))
-               empty?)
-       (jdbc/do-commands
-        (str "CREATE TABLE nomad_schema_migrations"
-             "(tag VARCHAR(256)"
-             ",applied TIMESTAMP"
-             ",CONSTRAINT uq_tag UNIQUE (tag))"))))))
+                     " AND table_name = 'nomad_schema_migrations'")]))
+      (jdbc/db-do-commands
+       db
+       (str "CREATE TABLE nomad_schema_migrations"
+            "(tag VARCHAR(256)"
+            ",applied TIMESTAMP"
+            ",CONSTRAINT uq_tag UNIQUE (tag))")))))
 
 (extend PostgresStore
   nomad/IMigrator
