@@ -5,10 +5,13 @@ jobs:
     working_directory: ~/nomad-migrators
     docker:
       - image: openjdk:8
+      - image: postgres:9.6.2
     environment:
       - LEIN_ROOT: nbd
       - SERVICE_NAME: nomad-migrators
       - AWS_PROFILE: staging
+      - PG_OPTS: "-U postgres -h localhost -p 5432"
+      - PGPASSWD: postgres
     steps:
       - checkout
       - restore_cache:
@@ -37,6 +40,7 @@ jobs:
           key: v1-semver
           paths:
             - /usr/bin/semver-from-git
+      - run: createdb ${PG_OPTS} nomad-test
       - run: AWS_PROFILE=staging lein deps
       - save_cache:
           key: v3-lein-deps-{{ checksum "project.clj" }}

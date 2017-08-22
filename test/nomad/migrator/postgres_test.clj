@@ -2,6 +2,7 @@
   (:require
    [clojure.test :refer :all]
    [clojure.java.shell :as sh]
+   [clojure.string :as str]
    [clojure.java.jdbc :as jdbc]
    [nomad.core :as nomad]
    [nomad.migrator.postgres :as postgres]))
@@ -9,10 +10,13 @@
 (def db (atom nil))
 
 (defn fixture [f]
-  (let [db-name (str "nomad-test-" (gensym))]
+  (let [db-name (str "nomad-test-" (gensym))
+        opts    (System/getenv "PG_OPTS")
+        opts    (when opts
+                  (str/split opts #" "))]
     (try
-      (sh/sh "dropdb" db-name)
-      (sh/sh "createdb" db-name)
+      (apply sh/sh (vec (flatten (list "dropdb" opts db-name))))
+      (apply sh/sh (vec (flatten (list "createdb" opts db-name))))
       (reset! db (postgres/connect {:db db-name
                                     :user "postgres"
                                     :password "postgres"
@@ -20,7 +24,7 @@
                                     :post 5432}))
       (f)
       (finally
-        (sh/sh "dropdb" db-name)))))
+        (apply sh/sh (vec (flatten (list "dropdb" opts db-name))))))))
 
 (use-fixtures :each fixture)
 
@@ -31,7 +35,7 @@
                                     {:up (fn []
                                            (jdbc/do-commands
                                             "CREATE TABLE test1(name VARCHAR(32))"))})))
-  (is (= :ok 
+  (is (= :ok
          (nomad/register-migration! "add-test1-age"
                                     {:up (fn []
                                            (jdbc/do-commands
