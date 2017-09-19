@@ -21,6 +21,7 @@ jobs:
       - restore_cache:
           keys:
             - lein-deps-{{ checksum "project.clj" }}
+      - run: apt-get install -yy postgresql-common
       - run: createdb ${PG_OPTS} nomad-test
       - run: AWS_PROFILE=staging lein deps
       - save_cache:
