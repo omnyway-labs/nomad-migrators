@@ -32,16 +32,18 @@
   (is (= {:index #{}, :clauses []} (nomad/clear-migrations!)))
   (is (= :ok
          (nomad/register-migration! "init-schema"
-                                    {:up (fn [conn]
-                                           (jdbc/db-do-commands
-                                            conn
-                                            "CREATE TABLE test1(name VARCHAR(32))"))})))
+                                    {:up (fn []
+                                           (jdbc/with-db-connection [conn (:db-spec @db)]
+                                             (jdbc/db-do-commands
+                                              conn
+                                              "CREATE TABLE test1(name VARCHAR(32))")))})))
   (is (= :ok
          (nomad/register-migration! "add-test1-age"
-                                    {:up (fn [conn]
-                                           (jdbc/db-do-commands
-                                            conn
-                                            "ALTER TABLE test1 ADD COLUMN age INTEGER"))})))
+                                    {:up (fn []
+                                           (jdbc/with-db-connection [conn (:db-spec @db)]
+                                             (jdbc/db-do-commands
+                                              conn
+                                              "ALTER TABLE test1 ADD COLUMN age INTEGER")))})))
   (is (= :ok (nomad/migrate! @db)))
 
   (is (= :ok

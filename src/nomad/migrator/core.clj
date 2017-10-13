@@ -36,7 +36,7 @@
 
 (defn apply! [{:keys [db-spec]} tag migration-fn]
   (jdbc/with-db-transaction [db db-spec]
-    (migration-fn db)
+    (migration-fn)
     (jdbc/insert! db :nomad_schema_migrations
                   {:tag     (name tag)
                    :applied (date->timestamp
