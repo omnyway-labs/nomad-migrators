@@ -5,6 +5,6 @@
   :description "OmnyPay Nomad migrators for H2 and PostgreSQL"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.h2database/h2 "1.4.192"]
-                 [net.omnypay/nomad "0.0.7"]
+                 [net.omnypay/nomad "0.1.0"]
                  [org.clojure/java.jdbc "0.7.1"]
                  [org.postgresql/postgresql "42.1.4"]])
