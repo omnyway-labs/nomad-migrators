@@ -1,10 +1,8 @@
 (ns nomad.migrator.datomic-test
   (:require
    [clojure.test :refer :all]
-   [clojure.java.jdbc :as jdbc]
    [nomad.core :as n]
    [nomad.migrator.datomic :as nmd]
-   [clojure.core.async :refer (<!!)]
    [nomad.migrator.datomic.api :as d]))
 
 (def db-args
