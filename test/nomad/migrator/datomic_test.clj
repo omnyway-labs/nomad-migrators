@@ -12,7 +12,7 @@
    :region "none"
    :endpoint "localhost:4334"
    :service "peer-server"
-   :protocol "dev"})
+   :protocol "mem"})
 
 (def db (atom nil))
 

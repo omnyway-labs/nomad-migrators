@@ -11,4 +11,4 @@
                  [org.postgresql/postgresql "42.1.4"]
                  [com.datomic/clj-client "0.8.606"]]
   :profiles {:dev {:dependencies
-                   [[com.datomic/datomic-pro "0.9.5561.62"]]}})
+                   [[com.datomic/datomic-free "0.9.5656"]]}})
