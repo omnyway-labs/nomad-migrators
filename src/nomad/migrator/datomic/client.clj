@@ -1,6 +1,6 @@
 (ns nomad.migrator.datomic.client
   (:require
-   [clojure.core.async :refer (<!!)]
+   [clojure.core.async :refer [<!!]]
    [datomic.client :as d]
    [datomic.client.admin :as da]))
 
