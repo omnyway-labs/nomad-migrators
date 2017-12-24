@@ -1,7 +1,6 @@
 (ns nomad.migrator.datomic
   (:require
    [clojure.string :as str]
-   [clojure.core.async :refer (<!!)]
    [nomad.core :as nomad :refer [defmigration]]
    [nomad.migrator.core :as migrator]
    [nomad.migrator.datomic.api :as d]))
