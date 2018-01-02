@@ -2,9 +2,13 @@
 
 (defproject net.omnypay/nomad-migrators VERSION
   :encoding "utf-8"
-  :description "OmnyPay Nomad migrators for H2 and PostgreSQL"
+  :description "OmnyPay Nomad migrators for H2, PostgreSQL and Datomic"
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/core.async "0.3.443"]
                  [com.h2database/h2 "1.4.192"]
                  [net.omnypay/nomad "0.1.0"]
                  [org.clojure/java.jdbc "0.7.1"]
-                 [org.postgresql/postgresql "42.1.4"]])
+                 [org.postgresql/postgresql "42.1.4"]
+                 [com.datomic/clj-client "0.8.606"]]
+  :profiles {:dev {:dependencies
+                   [[com.datomic/datomic-free "0.9.5656"]]}})

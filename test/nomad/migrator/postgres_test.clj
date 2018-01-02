@@ -15,8 +15,8 @@
         opts    (when opts
                   (str/split opts #" "))]
     (try
-      (apply sh/sh (vec (flatten (list "dropdb" opts db-name))))
-      (apply sh/sh (vec (flatten (list "createdb" opts db-name))))
+      (apply sh/sh `["dropdb" ~@opts ~db-name])
+      (apply sh/sh `["createdb" ~@opts ~db-name])
       (reset! db (postgres/connect {:db db-name
                                     :user "postgres"
                                     :password "postgres"
@@ -24,7 +24,7 @@
                                     :post 5432}))
       (f)
       (finally
-        (apply sh/sh (vec (flatten (list "dropdb" opts db-name))))))))
+        (apply sh/sh `["dropdb" ~@opts ~db-name])))))
 
 (use-fixtures :each fixture)
 
