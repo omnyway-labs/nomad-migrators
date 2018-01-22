@@ -5,7 +5,7 @@
    [java.util Date]
    [java.sql Timestamp]))
 
-(def ^:dynamic *current-conection* nil)
+(def ^:dynamic *current-connection* nil)
 
 (defn current-connection []
   *current-connection*)
