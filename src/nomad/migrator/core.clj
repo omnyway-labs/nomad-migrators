@@ -5,6 +5,11 @@
    [java.util Date]
    [java.sql Timestamp]))
 
+(def ^:dynamic *current-conection* nil)
+
+(defn current-connection []
+  *current-connection*)
+
 (defn as-timestamp
   ([]
    (as-timestamp (System/currentTimeMillis)))
