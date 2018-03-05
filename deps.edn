@@ -1,17 +1,21 @@
-{:deps
- {org.clojure/clojure       {:mvn/version "1.9.0"}
-  org.clojure/java.jdbc     {:mvn/version "0.7.1"}
-  org.clojure/core.async    {:mvn/version "0.3.443"}
-  com.h2database/h2         {:mvn/version "1.4.192"}
-  org.postgresql/postgresql {:mvn/version "42.1.4"}
-  com.datomic/clj-client    {:mvn/version "0.8.606"}
-  omnypay/nomad             {:git/url "git@github.com:omnypay/nomad.git"
-                             :sha     "66946eb8cbd3046f53f97be534fef724cf1ddc1c"}}
- :aliases
+{:aliases
  {:test
-  {:extra-paths ["test"]
-   :extra-deps  {com.datomic/datomic-free {:mvn/version "0.9.5656"}
-                 com.cognitect/test-runner
-                 {:git/url "git@github.com:cognitect-labs/test-runner"
-                  :sha     "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}}
-   :main-opts   ["-m" "cognitect.test-runner"]}}}
+  {:extra-paths ["test"],
+   :extra-deps
+   {com.datomic/datomic-free #:mvn{:version "0.9.5656"},
+    com.cognitect/test-runner
+    {:git/url "git@github.com:cognitect-labs/test-runner",
+     :sha "5fb4fc46ad0bf2e0ce45eba5b9117a2e89166479"}},
+   :main-opts ["-m" "cognitect.test-runner"]}},
+ :deps
+ {com.datomic/clj-client #:mvn{:version "0.8.606"},
+  com.h2database/h2 #:mvn{:version "1.4.192"},
+  omnypay/nomad
+  {:git/url "git@github.com:omnypay/nomad.git",
+   :sha "a0a9b0d81ca1b9fbfc15fce06e407b4a4994ca90",
+   :time "2018-03-05T03:56:25.000+0000",
+   :tag "0.1.3"},
+  org.clojure/clojure #:mvn{:version "1.9.0"},
+  org.clojure/core.async #:mvn{:version "0.3.443"},
+  org.clojure/java.jdbc #:mvn{:version "0.7.1"},
+  org.postgresql/postgresql #:mvn{:version "42.1.4"}}}
