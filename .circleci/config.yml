@@ -18,6 +18,7 @@ jobs:
           keys:
             - deps-{{ checksum "deps.edn" }}
       - run: sudo apt-get install -yy postgresql-common
+      - run: creatdb ${PG_OPTS} nomad-test
       - run: clojure -Adev:test unit
       - save_cache:
           key: deps-{{ checksum "deps.edn" }}
