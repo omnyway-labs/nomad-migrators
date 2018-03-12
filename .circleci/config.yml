@@ -17,7 +17,7 @@ jobs:
       - restore_cache:
           keys:
             - deps-{{ checksum "deps.edn" }}
-      - run: sudo apt-get install -yy postgresql-common
+      - run: ~/omnypay-ci/install-integration-test-deps.sh
       - run: createdb ${PG_OPTS} nomad-test
       - run: clojure -Adev:test unit
       - save_cache:
