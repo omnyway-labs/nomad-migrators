@@ -12,9 +12,9 @@
   com.h2database/h2 #:mvn{:version "1.4.192"},
   omnypay/nomad
   {:git/url "git@github.com:omnypay/nomad.git",
-   :sha "147ce0b5a8cf1e4e85bad3e2c617f8ad9cb205b2",
-   :time "2018-03-07T01:37:21.000+0000",
-   :tag "0.1.4"},
+   :sha "292be88535b03602a1244e337c88fe03e7c9e51b",
+   :time "2018-03-12T20:56:53.000+0000",
+   :tag "0.1.5"},
   org.clojure/clojure #:mvn{:version "1.9.0"},
   org.clojure/core.async #:mvn{:version "0.3.443"},
   org.clojure/java.jdbc #:mvn{:version "0.7.1"},
