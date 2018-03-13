@@ -1,17 +1,16 @@
 {:aliases
  {:dev
   {:extra-paths ["test"],
-   :extra-deps
-   #:com.datomic{datomic-free #:mvn{:version "0.9.5656"}}}},
+   :extra-deps {com.datomic/datomic-free {:mvn/version "0.9.5656"}}}},
  :deps
- {com.datomic/clj-client #:mvn{:version "0.8.606"},
-  com.h2database/h2 #:mvn{:version "1.4.192"},
+ {com.datomic/clj-client {:mvn/version "0.8.606"},
+  com.h2database/h2 {:mvn/version "1.4.192"},
   omnypay/nomad
   {:git/url "git@github.com:omnypay/nomad.git",
-   :sha "613f5639475a2fcb328576e460142c298415f4ce",
-   :time "2018-03-12T21:34:29.000+0000",
-   :tag "0.1.6"},
-  org.clojure/clojure #:mvn{:version "1.9.0"},
-  org.clojure/core.async #:mvn{:version "0.3.443"},
-  org.clojure/java.jdbc #:mvn{:version "0.7.1"},
-  org.postgresql/postgresql #:mvn{:version "42.1.4"}}}
+   :sha "515c6c792500685ab2a5c1b699c528330006507e",
+   :time "2018-03-13T03:40:47.000+0000",
+   :tag "0.1.7"},
+  org.clojure/clojure {:mvn/version "1.9.0"},
+  org.clojure/core.async {:mvn/version "0.3.443"},
+  org.clojure/java.jdbc {:mvn/version "0.7.1"},
+  org.postgresql/postgresql {:mvn/version "42.1.4"}}}
