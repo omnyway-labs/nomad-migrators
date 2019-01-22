@@ -5,11 +5,10 @@
  :deps
  {com.datomic/clj-client {:mvn/version "0.8.606"},
   com.h2database/h2 {:mvn/version "1.4.192"},
-  omnypay/nomad
-  {:git/url "git@github.com:omnypay/nomad.git",
-   :sha "515c6c792500685ab2a5c1b699c528330006507e",
-   :time "2018-03-13T03:40:47.000+0000",
-   :tag "0.1.7"},
+  omnyway-labs/nomad
+  {:git/url "https://github.com/omnyway-labs/nomad.git",
+   :sha "6241dd85f0404b76d38a8747fa9ed1161e04a14e",
+   :time "2019-01-22T00:36:06.000+0000"},
   org.clojure/clojure {:mvn/version "1.9.0"},
   org.clojure/core.async {:mvn/version "0.3.443"},
   org.clojure/java.jdbc {:mvn/version "0.7.1"},

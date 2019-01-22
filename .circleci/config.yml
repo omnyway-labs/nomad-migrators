@@ -12,6 +12,8 @@ jobs:
       - PGPASSWD: postgres
     steps:
       - checkout
+      - run: for i in `seq 120`; do nc -v -w 1 localhost 5432 && break ; sleep 1; done
+      - run: sleep 10
       - run: createdb ${PG_OPTS} nomad-test
       - run: vulcan test -s unit
   release:
