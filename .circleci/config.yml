@@ -4,7 +4,7 @@ jobs:
     parallelism: 1
     working_directory: ~/nomad-migrators
     docker:
-      - image: circleci/clojure:latest
+      - image: omnyway/vulcan:latest
       - image: postgres:9.6.2
     environment:
       - SERVICE_NAME: nomad-migrators
@@ -12,41 +12,21 @@ jobs:
       - PGPASSWD: postgres
     steps:
       - checkout
-      - run: git clone https://${READ_BOT_TOKEN}@github.com/omnypay/omnypay-ci.git  ~/omnypay-ci
-      - run: ~/omnypay-ci/install-basic-deps.sh
-      - restore_cache:
-          keys:
-            - deps-{{ checksum "deps.edn" }}
-      - run: ~/omnypay-ci/install-integration-test-deps.sh
       - run: createdb ${PG_OPTS} nomad-test
-      - run: clojure -Adev:test unit
-      - save_cache:
-          key: deps-{{ checksum "deps.edn" }}
-          paths:
-            - ~/.m2
-            - ~/.gitlibs
+      - run: vulcan test -s unit
   release:
     parallelism: 1
     working_directory: ~/nomad-migrators
     docker:
-      - image: circleci/clojure:latest
+      - image: omnyway/vulcan:latest
     environment:
-      - LEIN_ROOT: nbd
       - VERSION_FILE: ../VERSION
       - SERVICE_NAME: nomad-migrators
       - GOROOT: ""
       - GOPATH: "/root/.go"
-      - AWS_PROFILE: staging
     steps:
       - checkout
-      - run: git clone https://${READ_BOT_TOKEN}@github.com/omnypay/omnypay-ci.git  ~/omnypay-ci
-      - run: ~/omnypay-ci/install-basic-deps.sh
-      - run: ~/omnypay-ci/install-release-deps.sh
-      - restore_cache:
-          keys:
-            - deps-{{ checksum "deps.edn" }}
-      - run: semver-from-git $VERSION_FILE
-      - run: export SEMVER=$(cat $VERSION_FILE); ~/omnypay-ci/release-lib.sh
+      - run: vulcan next-tag > $VERSION_FILE
 workflows:
   version: 2
   build_test_release:
